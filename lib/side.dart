@@ -1,71 +1,105 @@
 import 'package:flutter/material.dart';
 
-class BizCard extends StatelessWidget {
-  const BizCard({Key? key}) : super(key: key);
+class BillSplitter extends StatefulWidget {
+  const BillSplitter({Key? key}) : super(key: key);
 
+  @override
+  State<BillSplitter> createState() => _BillSplitterState();
+}
+
+class _BillSplitterState extends State<BillSplitter> {
+  int _tipPercentage = 0;
+  int _personCounter = 1;
+  double _billAmount = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("hello"),
-        centerTitle: true,
-      ),
       body: Container(
+        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
         alignment: Alignment.center,
-        child: Stack(
-          alignment: Alignment.topCenter,
+        color: Colors.white,
+        child: ListView(
+          scrollDirection: Axis.vertical,
+          padding: EdgeInsets.all(20.5),
           children: [
-            _Card(),
-            _getAvatar(),
+            Container(
+              width: 150,
+              height: 150,
+              decoration: BoxDecoration(
+                color: Colors.purpleAccent.shade100,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Total Per Person"),
+                    Text("\$123"),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              padding: EdgeInsets.all(12.0),
+              decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  border: Border.all(
+                      color: Colors.blueGrey.shade100,
+                      style: BorderStyle.solid),
+                  borderRadius: BorderRadius.circular(12.0)),
+              child: Column(
+                children: [
+                  TextField(
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    style: TextStyle(color: Colors.grey),
+                    decoration: InputDecoration(
+                        prefixText: "Bill Amount",
+                        prefixIcon: Icon(Icons.attach_money)),
+                    onChanged: (String value) {
+                      try {
+                        _billAmount = double.parse(value);
+                      } catch (exception) {
+                        _billAmount = 0.0;
+                      }
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Spilt",
+                        style: TextStyle(color: Colors.grey.shade700),
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                if (_personCounter > 1) {
+                                  _personCounter--;
+                                } else {}
+                              });
+                            },
+                            child: Container(),
+                          )
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
-    );
-  }
-
-  Container _Card() {
-    return Container(
-      width: 350,
-      height: 200,
-      margin: EdgeInsets.all(50),
-      decoration: BoxDecoration(
-          color: Colors.blueGrey, borderRadius: BorderRadius.circular(8.0)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "SHAILESH",
-            style: TextStyle(fontSize: 20.9),
-          ),
-          Text("shaileshbourai2109@gmail.com"),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.person_outline),
-              Text("8447634937"),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Container _getAvatar() {
-    return Container(
-      width: 100,
-      height: 100,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          image: DecorationImage(
-              image: NetworkImage("https://picsum.photos/200/300"),
-              fit: BoxFit.fill),
-          borderRadius: BorderRadius.circular(40)),
     );
   }
 }
 
 void main() {
   runApp(MaterialApp(
-    home: BizCard(),
+    home: BillSplitter(),
   ));
 }
