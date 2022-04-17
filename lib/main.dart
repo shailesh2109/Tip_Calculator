@@ -199,7 +199,7 @@ class _BillSplitterState extends State<BillSplitter> {
     var totalPerPerson =
         (calculateTotalTip(billAmount, splitBy, tipPercentage) + billAmount) /
             splitBy;
-    return totalPerPerson;
+    return totalPerPerson.toStringAsFixed(2);
   }
 
   calculateTotalTip(double billAmount, int splitBy, int tipPercentage) {
