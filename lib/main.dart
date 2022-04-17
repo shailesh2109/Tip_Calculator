@@ -155,9 +155,9 @@ class _BillSplitterState extends State<BillSplitter> {
                         style: TextStyle(color: Colors.grey.shade700),
                       ),
                       Text(
-                        "\u{20B9} ${calculateTotalTip(_billAmount, _personCounter, _tipPercentage)}",
+                        "\u{20B9} ${(calculateTotalTip(_billAmount, _personCounter, _tipPercentage)).toStringAsFixed(2)}",
                         style: TextStyle(
-                            color: Colors.purple.shade600,
+                            color: Colors.deepPurple,
                             fontWeight: FontWeight.bold,
                             fontSize: 18),
                       )
